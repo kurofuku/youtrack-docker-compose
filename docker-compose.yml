@@ -1,0 +1,19 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - youtrack
+
+  youtrack:
+    image: jetbrains/youtrack:2025.3.119033
+    restart: unless-stopped
+    volumes:
+      - ./data:/opt/youtrack/data
+      - ./conf:/opt/youtrack/conf
+      - ./logs:/opt/youtrack/logs
+      - ./backups:/opt/youtrack/backups
+
